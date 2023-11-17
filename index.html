@@ -3,10 +3,54 @@
   <head>
     <title>TIC-TAC-TOE</title>
     <link href="./style.css" rel="stylesheet" />
+    <link href="https://api.fontshare.com/v2/css?f[]=nunito@700,800&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div class="game-board">
-
+      <ul class="left-side">
+        <li><button class="reset-button" id="reset-btn">Reset Game</button></li>
+        <li><button class="reset-button" id="restart-btn">Restart Game</button></li>
+        <li>
+          <button class="undo-button" id="undo-btn">
+            Undo Move
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 21">
+              <g clip-path="url(#a)">
+                <path
+                  fill="#000"
+                  fill-opacity=".85"
+                  d="M19.02 14.344c0-1.244-.271-2.34-.815-3.287-.543-.947-1.336-1.687-2.378-2.221-1.041-.534-2.304-.801-3.789-.801H5.476l-3.028.137.176.449 2.412-2.06 2.822-2.754a.942.942 0 0 0 .171-.264.827.827 0 0 0 .064-.332c0-.254-.08-.46-.24-.62-.159-.16-.369-.24-.63-.24a.84.84 0 0 0-.624.274L.856 8.26a.861.861 0 0 0 0 1.299L6.6 15.192a.84.84 0 0 0 .625.274c.26 0 .47-.08.63-.24a.84.84 0 0 0 .239-.62.827.827 0 0 0-.064-.332.94.94 0 0 0-.17-.263l-2.823-2.745-2.412-2.07-.176.45 3.028.136h6.709c1.113 0 2.047.189 2.802.567.755.377 1.325.903 1.71 1.577.383.674.576 1.447.576 2.319 0 .879-.193 1.663-.577 2.353-.384.69-.954 1.236-1.709 1.636-.755.4-1.69.6-2.802.6H9.939c-.267 0-.482.085-.645.255a.855.855 0 0 0-.244.615c0 .24.081.446.244.615.163.17.378.254.645.254h2.255c1.459 0 2.696-.259 3.711-.776 1.016-.518 1.789-1.244 2.32-2.178.53-.934.795-2.026.795-3.276Z" />
+              </g>
+              <defs>
+                <clipPath id="a"><path fill="#fff" d="M.564.389H19.02v20.186H.564z" /></clipPath>
+              </defs>
+            </svg>
+          </button>
+        </li>
+        <li>
+          <button class="redo-button" id="redo-btn">
+            Redo Move
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 21">
+              <g clip-path="url(#a)">
+                <path
+                  fill="#000"
+                  fill-opacity=".85"
+                  d="M.088 14.53c0 1.25.265 2.341.796 3.275.53.935 1.303 1.66 2.32 2.178 1.015.518 2.252.776 3.71.776H9.17c.267 0 .482-.084.644-.253a.855.855 0 0 0 .245-.616.855.855 0 0 0-.245-.615c-.162-.169-.377-.254-.644-.254H6.924c-1.113 0-2.048-.2-2.803-.6-.755-.4-1.326-.946-1.714-1.636-.387-.69-.58-1.475-.58-2.354 0-.872.193-1.645.58-2.319.388-.674.959-1.2 1.714-1.577.755-.378 1.69-.566 2.803-.566h6.7l3.036-.137-.176-.45-2.422 2.07-2.812 2.745a.78.78 0 0 0-.176.264.888.888 0 0 0-.058.332c0 .254.078.46.234.62.156.16.365.24.625.24a.85.85 0 0 0 .635-.274l5.742-5.635a.926.926 0 0 0 .22-.303.862.862 0 0 0-.22-.996L12.51 2.81a.85.85 0 0 0-.635-.273c-.26 0-.469.08-.625.24a.848.848 0 0 0-.234.62c0 .123.02.234.058.331a.779.779 0 0 0 .176.264l2.813 2.754 2.421 2.06.176-.449-3.037-.136H7.07c-1.484 0-2.747.266-3.789.8-1.041.534-1.834 1.275-2.378 2.222-.543.947-.815 2.043-.815 3.286Z" />
+              </g>
+              <defs>
+                <clipPath id="a"><path fill="#fff" d="M.088.574h18.457V20.76H.088z" /></clipPath>
+              </defs>
+            </svg>
+          </button>
+        </li>
+        <li id="next-player"></li>
+      </ul>
+      <ul class="right-side">
+        <li>Score Board</li>
+        <li class="score-board">
+          <span class="score">Player X: <span id="player-x-score">0</span></span>
+          <span class="score">Player O: <span id="player-o-score">0</span></span>
+        </li>
+      </ul>
     </div>
     <div class="game-box">
       <div class="box" id="box-1" aria-label="0"></div>
@@ -18,6 +62,12 @@
       <div class="box" id="box-7" aria-label="6"></div>
       <div class="box" id="box-8" aria-label="7"></div>
       <div class="box" id="box-9" aria-label="8"></div>
+    </div>
+    <div class="winner-overlay hidden" id="winner-overlay">
+      <div class="wrapper">
+        <h2>Player <span id="winner-text">X</span> wins this round!</h2>
+        <button class="replay-btn" id="replay-btn">Play Again</button>
+      </div>
     </div>
     <script src="./index.js" />
   </body>
