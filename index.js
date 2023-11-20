@@ -61,6 +61,8 @@ function onBoxClick(boxElement) {
 
   // add item to array index using boxId as position
   copySquares.splice(boxId, 1, (currentMove + round) % 2 === 0 ? 'X' : 'O')
+
+  // add current square array state to history
   copyHistory.splice(currentMove, 1, copySquares)
 
   squares = copySquares
