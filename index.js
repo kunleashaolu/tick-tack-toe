@@ -13,10 +13,13 @@ const winner_text = document.getElementById('winner-text')
 const reset_button = document.getElementById('reset-btn')
 const restart_button = document.getElementById('restart-btn')
 const replay_button = document.getElementById('replay-btn')
+const undo_button = document.getElementById('undo-btn')
+const redo_button = document.getElementById('redo-btn')
 const o_score = document.getElementById('player-o-score')
 const x_score = document.getElementById('player-x-score')
 
 let squares = Array(9).fill(null)
+let history = Array(9).fill(null)
 let currentMove = 0
 let scores = { x: 0, o: 0 }
 let round = 1
@@ -53,10 +56,15 @@ function onBoxClick(boxElement) {
   // make a copy of the orginal squares array
   let copySquares = squares.slice()
 
+  //make a copy of the original history array
+  let copyHistory = history.slice()
+
   // add item to array index using boxId as position
   copySquares.splice(boxId, 1, (currentMove + round) % 2 === 0 ? 'X' : 'O')
+  copyHistory.splice(currentMove, 1, copySquares)
 
   squares = copySquares
+  history = copyHistory
 
   boxElement.innerHTML = (currentMove + round) % 2 === 0 ? 'X' : 'O'
   next_player.innerHTML = (currentMove + round) % 2 != 0 ? 'Next Player:  X' : 'Next Player:  O'
@@ -85,6 +93,7 @@ function onBoxClick(boxElement) {
 
 function restartGame() {
   squares = Array(9).fill(null)
+  history = Array(9).fill(null)
   currentMove = 0
 
   box_1.innerHTML = ''
@@ -112,6 +121,44 @@ function resetGame() {
   restartGame()
 }
 
+function undoMove() {
+  if (currentMove === 1) return
+
+  currentMove -= 1
+
+  let copyHistory = history[currentMove - 1]
+  squares = copyHistory
+
+  box_1.innerHTML = copyHistory[0]
+  box_2.innerHTML = copyHistory[1]
+  box_3.innerHTML = copyHistory[2]
+  box_4.innerHTML = copyHistory[3]
+  box_5.innerHTML = copyHistory[4]
+  box_6.innerHTML = copyHistory[5]
+  box_7.innerHTML = copyHistory[6]
+  box_8.innerHTML = copyHistory[7]
+  box_9.innerHTML = copyHistory[8]
+}
+
+function redoMove() {
+  if (currentMove === 9 || history[currentMove] === null) return
+
+  currentMove += 1
+
+  let copyHistory = history[currentMove - 1]
+  squares = copyHistory
+
+  box_1.innerHTML = copyHistory[0]
+  box_2.innerHTML = copyHistory[1]
+  box_3.innerHTML = copyHistory[2]
+  box_4.innerHTML = copyHistory[3]
+  box_5.innerHTML = copyHistory[4]
+  box_6.innerHTML = copyHistory[5]
+  box_7.innerHTML = copyHistory[6]
+  box_8.innerHTML = copyHistory[7]
+  box_9.innerHTML = copyHistory[8]
+}
+
 box_1.addEventListener('click', (e) => onBoxClick(e.target))
 box_2.addEventListener('click', (e) => onBoxClick(e.target))
 box_3.addEventListener('click', (e) => onBoxClick(e.target))
@@ -125,3 +172,5 @@ box_9.addEventListener('click', (e) => onBoxClick(e.target))
 replay_button.addEventListener('click', () => replayGame())
 restart_button.addEventListener('click', () => restartGame())
 reset_button.addEventListener('click', () => resetGame())
+undo_button.addEventListener('click', () => undoMove())
+redo_button.addEventListener('click', () => redoMove())
